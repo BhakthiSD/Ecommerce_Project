@@ -157,6 +157,7 @@ header {
                 <li class="nav-item"><button class="toggle-button nav-link" onclick="toggleFrame('viewcustomers.jsp')">View Customers</button></li>
                 <li class="nav-item"><button class="toggle-button nav-link" onclick="toggleFrame('viewOrders.jsp')">View Orders</button></li>
                <li class="nav-item"><button class="toggle-button nav-link" onclick="toggleFrame('viewDept.jsp')">View Department</button></li>
+               <li class="nav-item"><button class="toggle-button nav-link" onclick="toggleFrame('logView.jsp')">View Log</button></li>              
                 
             </ul>
         <% } else if ("HR".equalsIgnoreCase(job)) { %>
