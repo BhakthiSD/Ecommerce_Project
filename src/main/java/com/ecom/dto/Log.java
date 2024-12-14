@@ -74,6 +74,7 @@ public class Log {
         if (session != null) {
             Employee loggedInUser = (Employee) session.getAttribute("employee");
             if (loggedInUser != null) {
+            	System.out.println("Successfully returned user name from method");
                 return loggedInUser.getEmpid() + " - " + loggedInUser.getFname();
             }
         }

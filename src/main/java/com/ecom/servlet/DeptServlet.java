@@ -20,6 +20,7 @@ public class DeptServlet extends HttpServlet {
 	public void processRequest(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     
         try {
+        	HttpSession session=req.getSession(false);
         	CompanyDAOImpl cdao = new CompanyDAOImpl();
         	if(req.getParameter("add") != null) 
         	{
@@ -41,7 +42,7 @@ public class DeptServlet extends HttpServlet {
         			if(result) {
         				d = cdao.getDept(dname,locid);
         				req.setAttribute("dept", d);
-                       	cdao.logAction("DEPARTMENT ADDED",(String) req.getAttribute("LogUser"), "DEPT", "1");
+                       	cdao.logAction("DEPARTMENT ADDED",(String) session.getAttribute("LogUser"), "DEPT", "5");
         				RequestDispatcher rd = req.getRequestDispatcher("addDept.jsp");
         				rd.forward(req, res);
         			}
@@ -83,7 +84,7 @@ public class DeptServlet extends HttpServlet {
         		int deptNo = Integer.parseInt(dno);
         		boolean flag = cdao.deleteDept(deptNo);
         		if(flag) {
-                   	cdao.logAction("DEPARTMENT DELETED",(String) req.getAttribute("LogUser"), "DEPT", "1");
+                   	cdao.logAction("DEPARTMENT DELETED",(String) session.getAttribute("LogUser"), "DEPT", "6");
         			req.setAttribute("success", "Department data deleted successfully.");
         			RequestDispatcher rd = req.getRequestDispatcher("deleteDept.jsp");
         			rd.forward(req, res);
@@ -133,7 +134,7 @@ public class DeptServlet extends HttpServlet {
         	  			boolean result = cdao.updateDept(d);
         	  			if(result) {
         	  				req.setAttribute("dept", d);
-                           	cdao.logAction("DEPARTMENT UPDATED",(String) req.getAttribute("LogUser"), "DEPT", "1");
+                           	cdao.logAction("DEPARTMENT UPDATED",(String) session.getAttribute("LogUser"), "DEPT", "7");
         	  				req.setAttribute("success", "Data Updated Successfully.");
         	  				RequestDispatcher rd = req.getRequestDispatcher("updateDept.jsp");
         	  				rd.forward(req, res);

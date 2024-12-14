@@ -852,15 +852,17 @@ public class CompanyDAOImpl implements CompanyDAO {
 
 	public void logAction(String action, String user, String tableName, String recordId) {
 	    PreparedStatement ps = null;
-	    String query = "INSERT INTO log_actions (action, user, table_name, record_id, timestamp) VALUES (?, ?, ?, ?, NOW())";
+	    String query = "INSERT INTO action_logs(action, user, table_name, record_id, timestamp) VALUES (?, ?, ?, ?, NOW())";
 
 	    try {
+	    	System.out.println("Came to try of logAction");
 	        ps = con.prepareStatement(query);
 	        ps.setString(1, action);
 	        ps.setString(2, user);
 	        ps.setString(3, tableName);
 	        ps.setString(4, recordId);
-	        ps.executeUpdate();
+	        int res=ps.executeUpdate();
+	        System.out.println("Inserted Log"+res);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }

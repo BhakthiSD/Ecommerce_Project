@@ -27,8 +27,9 @@ public class EmpLogin  extends HttpServlet{
 			
 			Employee e=dao.getEmployee(mail, password);
 			if(e!=null) {
-				session.setAttribute("employee", e);
-				req.setAttribute("LogUser",Log.getSessionUser(req));
+				session.setAttribute("employee", e);				
+				session.setAttribute("LogUser",Log.getSessionUser(req));
+				dao.logAction("EMPLOYEE LOGIN", (String)session.getAttribute("LogUser"), "EMP", "1");
 				req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
 					
 			}
@@ -52,7 +53,7 @@ public class EmpLogin  extends HttpServlet{
                 Boolean res=dao.updateEmployee(e);
                 if(res) {
                 	session.setAttribute("employee",e);
-                	dao.logAction("PROFILE UPDATE",(String) req.getAttribute("LogUser"), "EMP", "1");
+                	dao.logAction("PROFILE UPDATE",(String) session.getAttribute("LogUser"), "EMP", "1");
                 	session.setAttribute("status", "Updated successfully");
                 	req.getRequestDispatcher("profile.jsp").forward(req, resp);
                 }

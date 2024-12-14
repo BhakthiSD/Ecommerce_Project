@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.ecom.dao.CompanyDAO;
@@ -18,7 +20,7 @@ public class Totalsalesman extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+           HttpSession session =request.getSession(false);
 		/*
 		 * if(request.getParameter("sproduct")!=null) { CompanyDAO dao = new
 		 * CompanyDAOImpl();
@@ -43,7 +45,7 @@ public class Totalsalesman extends HttpServlet {
 		 */
 
 		if (request.getParameter("pedit") != null) {
-
+   
 			CompanyDAO dao = new CompanyDAOImpl();
 			Product p = new Product();
 
@@ -71,7 +73,7 @@ public class Totalsalesman extends HttpServlet {
 
 			boolean res = dao.updateProduct(p);
 			if (res) {
-               	dao.logAction("PRODUCT UPDATE",(String) request.getAttribute("LogUser"), "PRODUCT", "1");
+               	dao.logAction("PRODUCT UPDATE",(String) session.getAttribute("LogUser"), "PRODUCT", "8");
 				request.setAttribute("success", "updated successfully");
 				RequestDispatcher rd = request.getRequestDispatcher("ProductEdit.jsp");
 				rd.forward(request, response);
@@ -93,7 +95,10 @@ public class Totalsalesman extends HttpServlet {
 			boolean res = dao.deleteProduct(Pid);
 
 			
-			  if(res) { request.setAttribute("success", "Deleted successfully");
+			  if(res) {
+	               	dao.logAction("PRODUCT DELETE",(String) session.getAttribute("LogUser"), "PRODUCT", "9");
+
+				  request.setAttribute("success", "Deleted successfully");
 					/*
 					 * RequestDispatcher rd=request.getRequestDispatcher("ProductDelete.jsp");
 					 */		
@@ -136,6 +141,8 @@ public class Totalsalesman extends HttpServlet {
 
 			boolean res = dao.updateLocation(l);
 			if (res) {
+               	dao.logAction("location UPDATE",(String) session.getAttribute("LogUser"), "LOCATION", "10");
+
 				request.setAttribute("success", "updated successfully");
 				RequestDispatcher rd = request.getRequestDispatcher("LocationEdit.jsp");
 				rd.forward(request, response);
@@ -159,6 +166,7 @@ public class Totalsalesman extends HttpServlet {
 			boolean res = dao.deleteLocation(Lid);
 
 			if (res) {
+               	dao.logAction("LOCATION DELETE",(String) session.getAttribute("LogUser"), "LOCATION", "11");
 				request.setAttribute("success", "Deleted successfully");
 				/* RequestDispatcher rd = request.getRequestDispatcher("LocationDelete.jsp"); */
 				 RequestDispatcher rd=request.getRequestDispatcher("ViewLocation.jsp");
@@ -188,6 +196,7 @@ public class Totalsalesman extends HttpServlet {
 
 			boolean res = dao.addProduct(p);
 			if (res) {
+               	dao.logAction("PRODUCT ADDED",(String) session.getAttribute("LogUser"), "PRODUCT", "11");
 				request.setAttribute("success", "inserted successfully");
 				RequestDispatcher rd = request.getRequestDispatcher("ProductInsert.jsp");
 				rd.forward(request, response);
@@ -213,6 +222,7 @@ public class Totalsalesman extends HttpServlet {
 
 			boolean res = dao.addLocation(l);
 			if (res) {
+               	dao.logAction("LOCATION ADDED",(String) session.getAttribute("LogUser"), "LOCATION", "12");
 				request.setAttribute("success", "inserted successfully");
 				RequestDispatcher rd = request.getRequestDispatcher("LocationInsert.jsp");
 				rd.forward(request, response);

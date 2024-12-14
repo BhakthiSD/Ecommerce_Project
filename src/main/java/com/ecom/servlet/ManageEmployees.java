@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 @WebServlet("/emp")
 public class ManageEmployees extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -21,6 +22,7 @@ public class ManageEmployees extends HttpServlet {
 //		PrintWriter out = response.getWriter();
 		CompanyDAO dao = new CompanyDAOImpl();
 		Employee e=new Employee();
+		HttpSession session=request.getSession(false);
 		if(request.getParameter("add_emp")!=null) 
 		{
 			String fname=request.getParameter("Fname");
@@ -58,7 +60,7 @@ public class ManageEmployees extends HttpServlet {
 			boolean res=dao.addEmployee(e);
 			if(res) {
 		     	   request.setAttribute("status", "inserted successfully");
-               	dao.logAction("EMPLOYEE ADDED",(String) request.getAttribute("LogUser"), "EMP", "1");
+               	dao.logAction("EMPLOYEE ADDED",(String) session.getAttribute("LogUser"), "EMP", "2");
 		     	   RequestDispatcher rd=request.getRequestDispatcher("addEmp.jsp");
 		     	   rd.forward(request, response);
 		     	   
@@ -92,7 +94,7 @@ public class ManageEmployees extends HttpServlet {
 			boolean res=dao.deleteEmployee(Eid);
 			if(res) {
 				request.setAttribute("status", "Deleted successfully");
-               	dao.logAction("EMPLOYEE DELETED",(String) request.getAttribute("LogUser"), "EMP", "1");
+               	dao.logAction("EMPLOYEE DELETED",(String) session.getAttribute("LogUser"), "EMP", "3");
 
 				RequestDispatcher rd=request.getRequestDispatcher("delete_emp.jsp");
 				rd.forward(request, response);
@@ -113,7 +115,7 @@ public class ManageEmployees extends HttpServlet {
 		e=dao.getEmployee(eid);
 		if(e!=null) {
 	     	   request.setAttribute("updatemployee", e);
-              	dao.logAction("EMPLOYEE UPDATED",(String) request.getAttribute("LogUser"), "EMP", "1");
+              	dao.logAction("EMPLOYEE UPDATED",(String) session.getAttribute("LogUser"), "EMP", "4");
 	     	   RequestDispatcher rd=request.getRequestDispatcher("update_emp.jsp");
 	     	   rd.forward(request, response);
 	     	   
@@ -166,6 +168,7 @@ public class ManageEmployees extends HttpServlet {
 		boolean b=dao.updateEmployee(e);
 		
 		if(b) {
+          	dao.logAction("EMPLOYEE UPDATED",(String) session.getAttribute("LogUser"), "EMP", "4");
 			 request.setAttribute("status", "Successfully Updated!!");
 	     	   RequestDispatcher rd=request.getRequestDispatcher("update_emp.jsp");
 	     	   rd.forward(request, response);

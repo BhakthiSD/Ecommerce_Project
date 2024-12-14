@@ -137,9 +137,9 @@
                 <th>Log ID</th>
                 <th>Log Action</th>
                 <th>User Name</th>
-                <th>Record ID</th>
                 <th>Table Name</th>
                 <th>TimeStamp</th>
+                <th>Record ID</th>               
             </tr>
         </thead>
         <tbody>
@@ -152,9 +152,9 @@
                         out.println("<td>" + l1.getAction_id() + "</td>");
                         out.println("<td>" + l1.getAction() + "</td>");
                         out.println("<td>" + l1.getUser() + "</td>");
-                        out.println("<td>" + l1.getRecordId() + "</td>");
                         out.println("<td>" + l1.getTableName() + "</td>");
                         out.println("<td>" + l1.getTimestamp() + "</td>");
+                        out.println("<td>" + l1.getRecordId() + "</td>");                      
                         out.println("</tr>");
                     }
                 } else {
