@@ -1,1 +1,17 @@
 # Ecommerce_Project
+#Create a separate action_logs
+#SQL QUERY FOR THIS:
+CREATE TABLE action_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    action VARCHAR(255),
+    user VARCHAR(100),
+    table_name VARCHAR(100),
+    record_id VARCHAR(50),
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+#ALSO ADD A P_IMAGE COLUMN IN PRODUCT TABLE 
+#SQL QUERY FOR THIS IS:
+ALTER TABLE product
+ADD COLUMN P_IMAGE VARCHAR(200);
+
